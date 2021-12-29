@@ -24,11 +24,11 @@ public class ServerAction implements Runnable {
 
     @Override
     public void run() {
-        Result toReturn = null;
-        Thread execution = null;
-        ObjectInputStream ois = null;
-        ObjectOutputStream oos = null;
-        Request request = null;
+        Result toReturn;
+        Thread execution;
+        ObjectInputStream ois;
+        ObjectOutputStream oos;
+        Request request;
 
         try {
             ois = new ObjectInputStream(socket.getInputStream());
@@ -100,7 +100,7 @@ public class ServerAction implements Runnable {
     private synchronized Result getResultAsync(String id, Thread execution) {
         Result toReturn;
         if (execution.getState() == Thread.State.TERMINATED)
-            toReturn = new Result(id);
+            toReturn = new Result(id, "Async request");
         else
             toReturn = null;
 
@@ -114,7 +114,7 @@ public class ServerAction implements Runnable {
             e.printStackTrace();
             return null;
         }
-        return new Result(id);
+        return new Result(id, "Sync request");
     }
 
     private synchronized Result getResult(String id, Thread execution, long timeout) {
@@ -125,7 +125,7 @@ public class ServerAction implements Runnable {
             return null;
         }
         if (execution.getState() == Thread.State.TERMINATED)
-            return new Result(id);
+            return new Result(id, "Sync request with timeout");
         else
             return null;
     }

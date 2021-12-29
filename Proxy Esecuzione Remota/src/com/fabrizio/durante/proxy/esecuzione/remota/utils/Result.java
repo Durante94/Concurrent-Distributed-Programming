@@ -6,22 +6,29 @@ import java.io.Serializable;
  * Author Fabrizio Durante
  * 27/12/2021 12:16
  */
-public class Result implements Serializable {
+public class Result extends IResult implements Serializable {
 
-    private String id;
+    private String requestType;
 
-    public Result(String id) {
-        this.id = id;
+    public Result(String id, String requestType) {
+        super(id);
+        this.requestType = requestType;
     }
 
     public String getId() {
         return id;
     }
 
+    public String getRequestType() {
+        return requestType;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "id='" + id + '\'' +
+                ", requestType='" + requestType + '\'' +
                 '}';
     }
 }
+

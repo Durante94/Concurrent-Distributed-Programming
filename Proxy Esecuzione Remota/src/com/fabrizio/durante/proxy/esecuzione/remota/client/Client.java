@@ -1,7 +1,6 @@
 package com.fabrizio.durante.proxy.esecuzione.remota.client;
 
-import com.fabrizio.durante.proxy.esecuzione.remota.utils.Request;
-import com.fabrizio.durante.proxy.esecuzione.remota.utils.Result;
+import com.fabrizio.durante.proxy.esecuzione.remota.utils.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -48,6 +47,7 @@ public class Client {
             System.out.println("Give me an id:");
             try {
                 input = reader.readLine();
+                requests.put(input, null);
             } catch (IOException e) {
                 e.printStackTrace();
                 input = "";

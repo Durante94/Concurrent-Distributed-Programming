@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Author Fabrizio Durante
  * 29/12/2021 10:41
  */
-public class Request extends Result implements Serializable {
+public class Request extends IResult implements Serializable {
 
     private boolean async;
     private long timeout;

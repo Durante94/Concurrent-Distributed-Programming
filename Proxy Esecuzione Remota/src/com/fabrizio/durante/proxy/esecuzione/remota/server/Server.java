@@ -13,11 +13,15 @@ import java.util.concurrent.Executors;
 
 public class Server extends Thread {
 
-    private boolean acceptConnection;
+    private static boolean acceptConnection;
+
     private ServerSocket serverSocket;
-    private PrintStream console;
     private Map<String, Thread> resultContainer;
     private ExecutorService threadPool;
+
+    static {
+        acceptConnection = true;
+    }
 
     public Server(int port, PrintStream printStream) {
         int executionCores = Runtime.getRuntime().availableProcessors();
@@ -28,13 +32,11 @@ public class Server extends Thread {
 
         try {
             this.serverSocket = new ServerSocket(port);
-            console = printStream;
-            acceptConnection = true;
             resultContainer = new HashMap<>();
             threadPool = Executors.newFixedThreadPool(executionCores);
         } catch (IOException e) {
             e.printStackTrace();
-            acceptConnection = false;
+            blockConnection();
         }
     }
 
@@ -66,7 +68,7 @@ public class Server extends Thread {
             e.printStackTrace();
         }
 
-        server.blockConnection();
+        blockConnection();
 
         try {
             server.join();
@@ -75,11 +77,18 @@ public class Server extends Thread {
         }
     }
 
+    public static void blockConnection() {
+        acceptConnection = false;
+    }
+
+    public static boolean isAcceptConnection() {
+        return acceptConnection;
+    }
+
     @Override
     public void run() {
-        synchronized (console) {
-            console.println("In ascolto sulla porta: " + serverSocket.getLocalPort());
-        }
+        System.out.println("In ascolto sulla porta: " + serverSocket.getLocalPort());
+
         while (isAcceptConnection()) {
             try {
                 Socket socket = serverSocket.accept();
@@ -89,16 +98,7 @@ public class Server extends Thread {
             }
         }
         threadPool.shutdown();
-        synchronized (console) {
-            console.println("Server chiuso");
-        }
-    }
 
-    public void blockConnection() {
-        acceptConnection = false;
-    }
-
-    public boolean isAcceptConnection() {
-        return acceptConnection;
+        System.out.println("Server chiuso");
     }
 }
