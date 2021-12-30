@@ -3,7 +3,6 @@ package com.fabrizio.durante.proxy.esecuzione.remota.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class Server extends Thread {
         acceptConnection = true;
     }
 
-    public Server(int port, PrintStream printStream) {
+    public Server(int port) {
         int executionCores = Runtime.getRuntime().availableProcessors();
         if (executionCores >= 3)
             executionCores /= 2;
@@ -54,9 +53,9 @@ public class Server extends Thread {
         } else
             port = 100;
 
-        Server server = new Server(port, System.out);
+        Server server = new Server(port);
 
-        if (!server.isAcceptConnection()) return;
+        if (!isAcceptConnection()) return;
 
         System.out.println("Premi invio per fermare l'esecuzione del server");
         server.start();

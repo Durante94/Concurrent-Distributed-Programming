@@ -14,8 +14,8 @@ import java.util.Map;
  * 27/12/2021 11:43
  */
 public class ServerAction implements Runnable {
-    private Socket socket;
-    private Map<String, Thread> resultContainer;
+    private final Socket socket;
+    private final Map<String, Thread> resultContainer;
 
     public ServerAction(Socket socket, Map<String, Thread> resultContainer) {
         this.socket = socket;
@@ -62,6 +62,7 @@ public class ServerAction implements Runnable {
                 execution = resultContainer.get(request.getId());
             } else {
                 execution = new Thread(new Computation(10 * 60 * 1000));
+                execution.start();
                 resultContainer.put(request.getId(), execution);
             }
         }

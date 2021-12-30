@@ -127,6 +127,8 @@ public class Client {
                     System.out.println("Response: null");
                 else
                     System.out.println("Response:\n" + ack);
+
+                requests.replace(input, ack);
             }
         } while (execute);
     }

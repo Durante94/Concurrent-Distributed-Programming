@@ -15,10 +15,6 @@ public class Result extends IResult implements Serializable {
         this.requestType = requestType;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getRequestType() {
         return requestType;
     }
