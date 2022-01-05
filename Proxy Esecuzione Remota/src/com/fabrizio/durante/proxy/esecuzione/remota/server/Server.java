@@ -1,8 +1,8 @@
 package com.fabrizio.durante.proxy.esecuzione.remota.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.fabrizio.durante.proxy.esecuzione.remota.utils.Result;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -15,24 +15,24 @@ public class Server extends Thread {
     private static boolean acceptConnection;
 
     private ServerSocket serverSocket;
-    private Map<String, Thread> resultContainer;
+    private Map<String, Result> resultsContainer;
     private ExecutorService threadPool;
 
     static {
         acceptConnection = true;
     }
 
-    public Server(int port) {
-        int executionCores = Runtime.getRuntime().availableProcessors();
-        if (executionCores >= 3)
-            executionCores /= 2;
-        else
-            executionCores = 1;
+    public Server(int port, int poolSize) {
+//        int executionCores = Runtime.getRuntime().availableProcessors();
+//        if (executionCores >= 3)
+//            executionCores /= 2;
+//        else
+//            executionCores = 1;
 
         try {
             this.serverSocket = new ServerSocket(port);
-            resultContainer = new HashMap<>();
-            threadPool = Executors.newFixedThreadPool(executionCores);
+            resultsContainer = new HashMap<>();
+            threadPool = Executors.newFixedThreadPool(poolSize);
         } catch (IOException e) {
             e.printStackTrace();
             blockConnection();
@@ -40,7 +40,7 @@ public class Server extends Thread {
     }
 
     public static void main(String[] args) {
-        int port = -1;
+        int port = -1, poolSize = 1;
 
         if (args.length > 0) {
             try {
@@ -50,10 +50,22 @@ public class Server extends Thread {
                 ne.printStackTrace();
                 return;
             }
-        } else
-            port = 100;
 
-        Server server = new Server(port);
+            try {
+                poolSize = Integer.parseInt(args[1]);
+            } catch (NumberFormatException ne) {
+                System.out.println("Dimensione del pool non leggibile. Utilizzo Valore di default: 1");
+                ne.printStackTrace();
+            } catch (IndexOutOfBoundsException ioobe) {
+                System.out.println("Dimensione del pool non indicata. Utilizzo Valore di default: 1");
+                ioobe.printStackTrace();
+            }
+        } else {
+            port = 100;
+        }
+
+
+        Server server = new Server(port, poolSize);
 
         if (!isAcceptConnection()) return;
 
@@ -91,7 +103,7 @@ public class Server extends Thread {
         while (isAcceptConnection()) {
             try {
                 Socket socket = serverSocket.accept();
-                threadPool.execute(new ServerAction(socket, resultContainer));
+                threadPool.execute(new SocketHandler(resultsContainer, threadPool, socket));
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }

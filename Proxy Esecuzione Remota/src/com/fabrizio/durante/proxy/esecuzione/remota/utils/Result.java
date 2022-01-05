@@ -10,19 +10,23 @@ public class Result extends IResult implements Serializable {
 
     private String requestType;
 
-    public Result(String id, String requestType) {
+    public Result(String id) {
         super(id);
-        this.requestType = requestType;
     }
 
     public String getRequestType() {
         return requestType;
     }
 
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "id='" + id + '\'' +
+                ", valid=" + valid +
                 ", requestType='" + requestType + '\'' +
                 '}';
     }
