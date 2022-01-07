@@ -44,6 +44,8 @@ public class Proxy implements Runnable {
             }
         else
             System.out.println("Indicare host e porta");
+
+        
     }
 
     public String init() throws IOException {
