@@ -74,7 +74,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (!files.containsKey(file.getId())) return "File not found";
 
             toUpdate = files.get(file.getId());
-
+        }
+        synchronized (toUpdate) {
             if (toUpdate.getIdWriter().compareTo(file.getIdWriter()) != 0 ||
                     clientId.compareTo(toUpdate.getIdWriter()) != 0)
                 return "Access Denied";
