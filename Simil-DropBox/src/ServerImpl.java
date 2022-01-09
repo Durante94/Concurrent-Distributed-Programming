@@ -37,7 +37,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public File accessFile(String id, String clientId) throws RemoteException {
         File toReturn;
 
-        if (clientId != null || clientId.isEmpty()) return null;
+        if (clientId == null || clientId.isEmpty()) return null;
 
         synchronized (files) {
             toReturn = files.get(id);
