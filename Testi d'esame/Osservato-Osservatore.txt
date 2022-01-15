@@ -1,0 +1,8 @@
+Scrivere un pacchetto software Java che implementi il pattern Osservato/Osservatore.
+Il pacchetto deve includere:
+1) L’interfaccia Osservato contenente i metodi registraOsservatore, rimuoviOsservatore e nuovoEvento;
+2) L’interfaccia Osservatore contenente il metodo callback utilizzato per segnalare un nuovo evento;
+3) Un’implementazione di Osservato che attenda (non in busy waiting) la chiamata di uno dei suoi tre metodi per aggiungere un nuovo osservatore all’insieme corrente, oppure rimuovere un osservatore dall’insieme corrente, oppure eseguire le callback di tutti gli osservatori registrati; e’ NECESSARIO garantire che la registrazione di una callback bacata non blocchi l’intero sistema ma faccia fallire solo il dispatching di ulteriori eventi a quell’osservatore;
+4) Un’implementazione di Osservatore che si registri all’Osservato, attenda di aver ricevuto un numero casuale (10 < n < 20) di eventi e poi si deregistri dall’osservato;
+5) Un generatore di eventi che generi nuovi eventi con frequenza compresa tra 1/5s e 1/10s;
+6) Un main che istanzi 1 Osservato, 10 Osservatori (non tutti all’istante 0, ma distribuiti su un intervallo di tempo di almeno 30 s) e 2 generatori di eventi.

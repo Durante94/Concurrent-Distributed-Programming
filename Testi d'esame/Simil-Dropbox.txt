@@ -1,0 +1,9 @@
+Si consideri un sistema di storage online a-la Dropbox.
+Tale sistema e' costituito da un server e diversi client.
+Il server ed i client devono scambiarsi messaggi (sono entita' remote) per ottenere un funzionamento che deve garantire la consistenza dei singoli files a fronte della possibilita' di aprire gli stessi in lettura e scrittura.
+La lettura puo' essere concorrente da parte di piu' client, la scrittura e' sempre esclusiva.
+Non e' richiesto che il tentativo di apertura in scrittura prevenga ulteriori aperture in lettura in modo da impedire la starvation.
+I files sono, di norma, conservati sul server. Un client in lettura richiede l'apertura del file, ottiene il consenso, ottiene il file, lo utilizza, segnala il completamento.
+Un client in scrittura richiede l'apertura del file, ottiene il consenso, ottiene il file, lo utilizza, invia la copia modificata al server e segnala il completamento.
+Implementare un sistema che garantisca il funzionamento sopra descritto. E' accettabile sia una soluzione con socket, sia una soluzione con RMI.
+L'operazione di trasferimento dei file puo' essere simulata (solo il passaggio dell'evento).

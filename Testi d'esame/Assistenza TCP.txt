@@ -1,0 +1,12 @@
+Supporto Utente via TCP
+Si consideri un sistema software per il supporto automatico di problemi posti dall’utenza.
+Un utente genera un oggetto richiesta contenente:
+	una stringa descrittiva del problema
+	Un numero di telefono cui essere chiamato.
+L’utente si connette al sistema software di supporto automatico con una connessione TCP all’indirizzo x.y.z.t e al port k e serializza l’oggetto richiesta sottoponendolo al sistema, poi si pone in attesa della telefonata.
+Il sistema genera un id univoco per la nuova richiesta e la pone in coda in attesa di servizio.
+Un operatore del call center segnalera’ la sua disponibilita’ al sistema richiedendo un oggetto richiesta tramite una connessione TCP all’indirizzo x.y.z.t al port j.
+Il sistema risponde a tale connessione serializzando l’oggetto richiesta in attesa da piu’ tempo all’operatore. Una richiesta serializzata ad un operatore ha una scadenza di 10 minuti.
+Se entro 10 minuti l’operatore e’ riuscito a chiamare il numero segnala al sistema che la richiesta e’ servita. Allo scadere dei 10 minuti segnala invece che la richiesta e’ da riaccodare tra quelle in attesa.
+Per fare questo si connette nuovamente all’indirizzo x.y.z.t al port m e invia prima un oggetto stringa con valore “ACK” o “NACK” e poi l’oggetto richiesta cui si riferisce.
+A seconda del valore “ACK” o “NACK” il sistema aggiunge la richiesta al log delle richieste servite o la reinserisce nella coda di quelle in attesa di servizio.

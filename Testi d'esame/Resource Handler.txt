@@ -1,0 +1,5 @@
+Si consideri un sistema software capace di gestire risorse disponibili in numero intero N ed esecutori disponibili in numero M (tipicamente con N >> M).
+Ogni richiesta di servizio contiene l’informazione del numero di risorse richieste ed e’ formulata tramite la chiamata bloccante ad un metodo serveMe(int risorse, int secondi) ove risorse e’ il numero di risorse necessarie a
+soddisfare quella richiesta e secondi e’ il tempo in secondi necessario a soddisfare la richiesta una volta avviato il servizio.
+Una richiesta che non e’ immediatamente soddisfabile deve essere posta in attesa.
+Quando il completamento di un servizio libera risorse esse devono essere utilizzate per soddisfare il maggior numero di richieste possibili, quindi dando priorità alle richieste che richiedono meno risorse.

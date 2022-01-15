@@ -1,0 +1,10 @@
+Questo e' stato uno scritto d'esame. E' abbastanza "tosto", ma e' un problema reale: praticamente replica il core della libreria Open Source che implementa il protocollo SIP.
+Si consideri un sistema atto a gestire l’evoluzione delle macchine a stati di un numero variabile di connessioni gestite da protocolli diversi.
+Il sistema contiene una parte di gestione delle connessioni in modalita’ asincrona che non e’ richiesto a voi di sviluppare. A valle di tale componente sara’ visibile una coda di “pacchetti” contenenti:
+- una ID univoca della macchina a stati;
+- una tipologia di protocollo
+- le informazioni necessarie a far evolvere la macchina a stati
+Si richiede di sviluppare un sistema multithread in grado di gestire l’esecuzione delle transizioni richieste dai pacchetti in modo che transizioni riferite a macchine a stati diverse possano essere esguite in modo concorrente/parallelo ma transizioni riferite ad una stessa macchina a stati siano sempre eseguite sequenzialmente e sempre secondo la sequenza con cui sono state inserite nella coda master.
+L’arrivo di un pacchetto con ID ignoto forza l’istanziazione di una nuova macchina a stati (del protocollo dato).
+Il sistema deve avere un numero di thread dedicati all’esecuzione delle singole transizioni indipendente dal numero di macchine a stati presenti.
+Il sistema deve essere in grado di funzionare sia nel caso in cui il numero di macchine a stati sia molto maggiore del numero di esecutori, sia nel caso in cui il numero di esecutori sia maggiore di quello delle macchine a stati.
