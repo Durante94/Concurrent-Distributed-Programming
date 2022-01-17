@@ -1,0 +1,9 @@
+Scrivere un sistema di information retrieval concorrente. Il sistema accetta delle richieste di informazioni associate ad una chiave di ricerca via un interfaccia RMI.
+Al ricevimento di una richiesta di servizio il sistema deve controllare se la risposta associata a quella chiave e’ gia’ stata calcolata/cercata e registrata in una “cache” oppure se e’ una richiesta nuova.
+Nel primo caso il sistema deve immediatamente rispondere con il valore contenuto nella cache, nel secondo il sistema deve calcolare/cercare la risposta (si utilizzi a questo scopo una funzione dummy), inserire il risultato dentro
+alla cache, fornire il risultato al chiamante.
+Il sistema deve garantire:
+1) Ogni nuovo calcolo/ricerca deve essere eseguito concorrentemente ad altre richieste di servizio;
+2) Nel caso in cui un risultato in corso di valutazione/ricerca venga chiesto di nuovo, non si deve lanciare una nuova valutazione concorrente ma invece il secondo richiedente deve aspettare che la prima valutazione lanciata
+	inserisca il valore valido nella cache.
+3) Deve essere possibile invalidare un risultato. In questo caso chi era gia' in attesa di un risultato in fase di calcolo ricevera' ancora quello, ma una successiva richiesta con la stessa chiave dovra' ricominciare da zero.
