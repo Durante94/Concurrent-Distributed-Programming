@@ -44,7 +44,7 @@ public class CacheHandlerImpl extends UnicastRemoteObject implements CacheHandle
 
         //Trying to get the lock for a possible concurrent Result
         synchronized (toReturn) {
-            //If the result has not yet been calculated
+            //If the result has not been calculated yet
             if (!toReturn.isValid()) {
                 System.out.println("Processing " + toReturn + " for " + id);
                 //Doing the calculations
